@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Lista de Projetos</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="text-center mt-4">Lista de Projetos</h1>
+    <ul id="projects-list" class="list-group mt-4">
+      {% for projeto, tarefas in projetos %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <a href="/projeto/{{ projeto[0] }}">{{ projeto[1] }}</a>
+        <div>
+          <a href="/projeto/{{ projeto[0] }}/editar" class="btn btn-primary btn-sm me-2">Editar</a>
+          <a href="/projeto/{{ projeto[0] }}/excluir" class="btn btn-danger btn-sm">Excluir</a>
+        </div>
+        <ul class="list-group mt-2">
+          {% for tarefa in tarefas %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{ tarefa[1] }}
+            <span class="badge bg-primary rounded-pill">{{ tarefa[3] }}</span>
+            <span class="badge bg-secondary rounded-pill">{{ tarefa[4] }}</span>
+          </li>
+          {% endfor %}
+        </ul>
+      </li>
+      {% endfor %}
+    </ul>
+
+    <!-- Botão de exportação para Excel -->
+    <button id="export-button" class="btn btn-primary mt-4">Exportar para Excel</button>
+  </div>
+
+  <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+  <script>
+    function exportToExcel() {
+      var projectsTable = document.createElement('table');
+      var projectsList = document.getElementById('projects-list');
+      var rows = projectsList.getElementsByTagName('li');
+
+      // Cria as células e linhas do Excel
+      for (var i = 0; i < rows.length; i++) {
+        var row = rows[i];
+        var cells = row.getElementsByTagName('li');
+        var newRow = projectsTable.insertRow(i);
+
+        for (var j = 0; j < cells.length; j++) {
+          var cell = cells[j];
+          var newCell = newRow.insertCell(j);
+          newCell.innerHTML = cell.innerText;
+        }
+      }
+
+      // Cria o workbook e adiciona a planilha
+      var workbook = XLSX.utils.book_new();
+      var worksheet = XLSX.utils.table_to_sheet(projectsTable);
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Projetos');
+
+      // Salva o arquivo Excel
+      XLSX.writeFile(workbook, 'lista_projetos.xlsx');
+    }
+
+    window.addEventListener('load', function () {
+      // Adiciona o evento de clique ao botão de exportação
+      var exportButton = document.getElementById('export-button');
+      exportButton.addEventListener('click', exportToExcel);
+    });
+  </script>
+
+</body>
+
+</html>

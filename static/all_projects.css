@@ -1,0 +1,68 @@
+/* all_projects.css */
+
+/* Estilo geral */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  color: #333;
+  text-align: center;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 20px;
+}
+
+h2 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+p {
+  margin: 0;
+}
+
+/* Estilo das tarefas */
+.tarefa {
+  background-color: #f2f2f2;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.tarefa p {
+  margin-bottom: 5px;
+}
+
+.tarefa strong {
+  font-weight: bold;
+}
+
+/* Estilos adicionais */
+.header {
+  background-color: #333;
+  padding: 10px;
+  color: #fff;
+}
+
+.header h1 {
+  font-size: 32px;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
